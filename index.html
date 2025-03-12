@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Calendrier padel</title>
+  <link rel="stylesheet" href="src/styles.css">
+</head>
+
+<body>
+  <div class="wrapper-title-clean">
+    <h1 id="calendar-title">Mon calendrier de padel</h1>
+    <button id="clean-up">Nettoyage des notifs</button>
+  </div>
+  
+  <div class="calendar">
+    <div class="calendar-header">
+      <button id="prev-month">‹</button>
+      <div id="month-year"></div>
+      <button id="next-month">›</button>
+    </div>
+    <div class="calendar-body">
+      <div class="calendar-weekdays">
+        <div>Lun</div>
+        <div>Mar</div>
+        <div>Mer</div>
+        <div>Jeu</div>
+        <div>Ven</div>
+        <div>Sam</div>
+        <div>Dim</div>
+      </div>
+      <div class="calendar-dates">
+        <!-- Dates will be populated here -->
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="src/script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,126 @@
+body {
+    font-family: Helvetica;
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.wrapper-title-clean {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+}
+
+#clean-up {
+    background-color: rgb(80, 252, 123);
+    cursor: pointer;
+}
+
+.calendar {
+    width: 80vw;
+    height: 80vh;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.calendar-header {
+    height: 15%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.calendar-header button {
+    background-color: transparent;
+    border: none;
+    font-size: 3em;
+    cursor: pointer;
+    width: 10%;
+    height: 100%;
+    padding: 0;
+}
+
+.calendar-header button:hover{
+    background-color: #dadada;
+    border: 1px solid black;
+}
+
+.calendar-body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#month-year {
+    font-size: 2em;
+}
+
+.calendar-weekdays,
+.calendar-dates {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.calendar-dates {
+    flex-grow: 1;
+}
+
+.calendar-weekdays div,
+.calendar-dates div {
+    text-align: center;
+}
+
+.calendar-weekdays {
+    height: 7%;
+    background-color: #eaeef3;
+    align-items: center;
+}
+
+.calendar-weekdays div {
+    font-weight: bold;
+}
+
+.calendar-dates div {
+    border-bottom: 1px solid #eaeef3;
+    cursor: pointer;
+}
+
+.calendar-dates div:hover {
+    background-color: #dadada;
+    border: 1px solid black;
+}
+
+.current-date {
+    background-color: #1f8afc;
+}
+
+.day {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.selected {
+    background-color: #ff0000;
+}
+
+.selected.current-date {
+    background: linear-gradient(to bottom right, #1f8afc, #ff0000);
+}
+
+@media (max-width: 400px) {
+    .calendar {
+        width: 100%;
+        margin: 0 10px;
+    }
+}
