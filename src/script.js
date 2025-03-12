@@ -4,6 +4,7 @@ const prevMonthBtn = document.getElementById('prev-month');
 const nextMonthBtn = document.getElementById('next-month');
 import axios from 'axios';
 
+require('dotenv').config();
 const host = process.env.HOST_CALENDAR_API || 'http://localhost:5000';
 
 let currentDate = new Date();

@@ -1,7 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const port = process.env.PORT || 5000;
+require('dotenv').config();
+const port = process.env.CALENDAR_BACK_PORT || 5000;
 const ip = require('ip');
 const db = require('./src/database/database');
 
