@@ -2,10 +2,6 @@ const calendarDates = document.querySelector('.calendar-dates');
 const monthYear = document.getElementById('month-year');
 const prevMonthBtn = document.getElementById('prev-month');
 const nextMonthBtn = document.getElementById('next-month');
-import axios from 'axios';
-
-require('dotenv').config();
-const host = process.env.HOST_CALENDAR_API || 'http://localhost:5000';
 
 let currentDate = new Date();
 let currentMonth = currentDate.getMonth();
@@ -83,7 +79,7 @@ function dateFormat(day, month, year) {
 
 async function fetchNotifications() {
     try {
-        const response = await axios.get(host + '/notifications');
+        const response = await axios.get('/notifications');
         const notifications = response.data.notifications;
         console.log(notifications);
         return notifications || [];
@@ -95,7 +91,7 @@ async function fetchNotifications() {
 
 async function addNotification(date) {
     try {
-        const response = await axios.post(host + '/notifications', { date });
+        const response = await axios.post('/notifications', { date });
         console.log(response.data);
     } catch (error) {
         console.error('Erreur lors de l\'ajout de la notification : ', error);
@@ -104,7 +100,7 @@ async function addNotification(date) {
 
 async function deleteNotification(date) {
     try {
-        const response = await axios.delete(`${host}/notifications/${date}`);
+        const response = await axios.delete(`/notifications/${date}`);
         console.log(response.data);
     } catch (error) {
         console.error('Erreur lors de la suppression de la notification : ', error);
@@ -113,7 +109,7 @@ async function deleteNotification(date) {
 
 async function cleanupNotifications() {
     try {
-        const response = await axios.delete(host + '/notifications');
+        const response = await axios.delete('/notifications');
         console.log(response.data);
     } catch (error) {
         console.error('Erreur lors du nettoyage des notifications : ', error);
