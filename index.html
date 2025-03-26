@@ -8,11 +8,43 @@
 </head>
 
 <body>
+
+  <button id="openPopupBtn">Connexion</button>
+  <button id="logoutBtn" style="display: none;">Déconnexion</button>
+
+  <div id="popup" class="popup">
+    <div class="popup-content">
+      <span id="closePopupBtn" class="close-btn">&times;</span>
+      <div id="loginForm">
+        <h2>Connexion</h2>
+        <form id="login">
+          <label for="loginUsername">Nom d'utilisateur :</label>
+          <input type="text" id="loginUsername" name="username" class="login-input" autocomplete="username" required>
+          <label for="loginPassword">Mot de passe :</label>
+          <input type="password" id="loginPassword" name="password" class="login-input" autocomplete="current-password" required>
+          <button type="submit">Se connecter</button>
+        </form>
+        <p>Pas encore de compte ? <a href="#" id="showRegisterForm">S'inscrire</a></p>
+      </div>
+      <div id="registerForm" style="display: none;">
+        <h2>Inscription impossible actuellement</h2>
+        <form id="register">
+          <label for="registerUsername">Nom d'utilisateur :</label>
+          <input type="text" id="registerUsername" name="username" class="login-input" disabled>
+          <label for="registerPassword">Mot de passe :</label>
+          <input type="password" id="registerPassword" name="password" class="login-input" disabled>
+          <button type="submit" disabled>S'inscrire</button>
+        </form>
+        <p>Déjà un compte ? <a href="#" id="showLoginForm">Se connecter</a></p>
+      </div>
+    </div>
+  </div>
+
   <div class="wrapper-title-clean">
     <h1 id="calendar-title">Mon calendrier de padel</h1>
     <button id="clean-up">Nettoyage des notifs</button>
   </div>
-  
+
   <div class="calendar">
     <div class="calendar-header">
       <button id="prev-month">‹</button>
@@ -33,6 +65,12 @@
         <!-- Dates will be populated here -->
       </div>
     </div>
+  </div>
+
+  <div class="legend">
+    <span style="font-weight: bold">Légende :</span> <br />
+    <span style="color: #3a8de6">&#9632;</span> : aujourd'hui <br />
+    <span style="color: #e73d3d">&#9632;</span> : notifications désactivées<br />
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

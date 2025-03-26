@@ -7,6 +7,26 @@ let currentDate = new Date();
 let currentMonth = currentDate.getMonth();
 let currentYear = currentDate.getFullYear();
 
+let user;
+document.addEventListener('DOMContentLoaded', () => {
+    user = getUser();
+    if (user) {
+        console.log('Utilisateur connecté:', user);
+        document.getElementById('logoutBtn').style.display = 'flex';
+        document.getElementById('openPopupBtn').style.display = 'none';
+    } else {
+        console.log('Aucun utilisateur connecté');
+        document.getElementById('logoutBtn').style.display = 'none';
+        document.getElementById('openPopupBtn').style.display = 'flex';
+    }
+});
+
+const axiosInstance = axios.create({
+    // baseURL seulement utilisé pour le dev en local
+    // baseURL: 'http://localhost:5000',
+    withCredentials: true
+});
+
 const months = [
     'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
     'Juillet', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Decembre'
@@ -49,13 +69,19 @@ function renderCalendar(month, year) {
                 day.classList.add('current-date');
             }
 
-            day.addEventListener('click', () => {
-                if (day.classList.contains('selected')) {
-                    deleteNotification(`${year}-${monthPretty}-${day.textContent}`);
-                } else {
-                    addNotification(`${year}-${monthPretty}-${day.textContent}`);
+            day.addEventListener('click', async () => {
+                try {
+                    if (day.classList.contains('selected')) {
+                        await deleteNotification(`${year}-${monthPretty}-${day.textContent}`);
+                        day.classList.toggle('selected');
+                    } else {
+                        await addNotification(`${year}-${monthPretty}-${day.textContent}`);
+                        day.classList.toggle('selected');
+                    }
+                } catch (error) {
+                    console.error('Erreur lors de la mise à jour de la notification : ', error);
+                    alert('Connexion requise pour modifier les notifications')
                 }
-                day.classList.toggle('selected');
             });
 
             calendarDates.appendChild(day);
@@ -79,9 +105,8 @@ function dateFormat(day, month, year) {
 
 async function fetchNotifications() {
     try {
-        const response = await axios.get('/notifications');
+        const response = await axiosInstance.get('/notifications');
         const notifications = response.data.notifications;
-        console.log(notifications);
         return notifications || [];
     } catch (error) {
         console.error('Erreur lors de la récupération des notifications : ', error);
@@ -91,26 +116,25 @@ async function fetchNotifications() {
 
 async function addNotification(date) {
     try {
-        const response = await axios.post('/notifications', { date });
-        console.log(response.data);
+        await axiosInstance.post('/notifications', { date });
     } catch (error) {
         console.error('Erreur lors de l\'ajout de la notification : ', error);
+        throw error;
     }
 }
 
 async function deleteNotification(date) {
     try {
-        const response = await axios.delete(`/notifications/${date}`);
-        console.log(response.data);
+        await axiosInstance.delete(`/notifications/${date}`);
     } catch (error) {
         console.error('Erreur lors de la suppression de la notification : ', error);
+        throw error;
     }
 }
 
 async function cleanupNotifications() {
     try {
-        const response = await axios.delete('/notifications');
-        console.log(response.data);
+        await axiosInstance.delete('/notifications');
     } catch (error) {
         console.error('Erreur lors du nettoyage des notifications : ', error);
     }
@@ -140,3 +164,85 @@ nextMonthBtn.addEventListener('click', () => {
 });
 
 document.getElementById("clean-up").addEventListener("click", cleanupNotifications);
+
+
+
+
+
+
+
+
+document.getElementById('openPopupBtn').addEventListener('click', function () {
+    document.getElementById('popup').style.display = 'flex';
+});
+
+document.getElementById('logoutBtn').addEventListener('click', function () {
+    console.log('Déconnexion en cours...');
+    axiosInstance.post('/logout')
+        .then(() => {
+            document.getElementById('logoutBtn').style.display = 'none';
+            document.getElementById('openPopupBtn').style.display = 'flex';
+            clearUser();
+            location.reload();
+            console.log('Déconnexion réussie.');
+        })
+        .catch(error => {
+            console.error('Erreur lors de la déconnexion : ', error);
+        });
+});
+
+document.getElementById('closePopupBtn').addEventListener('click', function () {
+    document.getElementById('popup').style.display = 'none';
+});
+
+document.getElementById('showRegisterForm').addEventListener('click', function (event) {
+    event.preventDefault();
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('registerForm').style.display = 'block';
+});
+
+document.getElementById('showLoginForm').addEventListener('click', function (event) {
+    event.preventDefault();
+    document.getElementById('registerForm').style.display = 'none';
+    document.getElementById('loginForm').style.display = 'block';
+});
+
+document.getElementById('login').addEventListener('submit', function (event) {
+    event.preventDefault();
+    console.log('Connexion en cours...');
+    const username = document.getElementById('loginUsername').value;
+    const pwd = document.getElementById('loginPassword').value;
+    const data = { username: username, password: pwd };
+    axiosInstance.post('/login', data)
+        .then(response => {
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('openPopupBtn').style.display = 'none';
+            document.getElementById('logoutBtn').style.display = 'flex';
+            setUser({ user: response.data.user});
+            console.log('Connexion réussie.');
+        })
+        .catch(error => {
+            console.error('Erreur lors de la connexion : ', error);
+        });
+});
+
+document.getElementById('register').addEventListener('submit', function (event) {
+    event.preventDefault();
+    console.log('Inscription en cours...');
+});
+
+
+
+
+
+function setUser(user) {
+    localStorage.setItem('user', JSON.stringify(user));
+}
+
+function getUser() {
+    return JSON.parse(localStorage.getItem('user'));
+}
+
+function clearUser() {
+    localStorage.removeItem('user');
+}

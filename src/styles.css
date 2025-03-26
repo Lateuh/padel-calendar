@@ -18,8 +18,12 @@ body {
 }
 
 #clean-up {
-    background-color: rgb(80, 252, 123);
+    background-color: rgb(111, 233, 141);
     cursor: pointer;
+}
+
+#clean-up:hover {
+    background: linear-gradient(to bottom right, rgb(111, 233, 141), #dadada);
 }
 
 .calendar {
@@ -101,7 +105,11 @@ body {
 }
 
 .current-date {
-    background-color: #1f8afc;
+    background-color: #3a8de6;
+}
+
+.current-date:hover {
+    background: linear-gradient(to bottom right, #3a8de6, #dadada);
 }
 
 .day {
@@ -111,11 +119,15 @@ body {
 }
 
 .selected {
-    background-color: #ff0000;
+    background-color: #e73d3d;
+}
+
+.selected:hover {
+    background: linear-gradient(to bottom right, #e73d3d, #dadada);
 }
 
 .selected.current-date {
-    background: linear-gradient(to bottom right, #1f8afc, #ff0000);
+    background: linear-gradient(to bottom right, #3a8de6, #e73d3d);
 }
 
 @media (max-width: 400px) {
@@ -123,4 +135,72 @@ body {
         width: 100%;
         margin: 0 10px;
     }
+}
+
+
+
+
+
+#openPopupBtn, #logoutBtn {
+    display: flex;
+    align-self: flex-end;
+    margin-right: 10%;
+    cursor: pointer;
+}
+
+#logoutBtn {
+    background-color: #2e2e2e;
+    color: white;
+}
+
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+}
+
+.login-input {
+    width: 80%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+
+.legend {
+    margin-top: 5px;
 }

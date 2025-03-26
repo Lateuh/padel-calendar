@@ -6,6 +6,11 @@ db.serialize(() => {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             date TEXT NOT NULL)`);
 
+  db.run(`CREATE TABLE IF NOT EXISTS user (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT NOT NULL UNIQUE,
+            password TEXT NOT NULL)`);
+
   // Ajouter un index sur la colonne date
   db.run(`CREATE INDEX IF NOT EXISTS idx_date ON notification(date)`);
 });
